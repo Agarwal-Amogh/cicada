@@ -29,6 +29,13 @@
       "expo-router",
       "expo-font",
       [
+        "expo-sqlite",
+        {
+          "useSQLCipher": true
+        }
+      ],
+      "expo-secure-store",
+      [
         "expo-splash-screen",
         {
           "backgroundColor": "#F6F6F8",

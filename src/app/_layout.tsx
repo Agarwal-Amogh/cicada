@@ -14,6 +14,7 @@ import { useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { AppTabs } from '@/components/AppTabs';
+import { DataProvider } from '@/data/DataProvider';
 import { palettes } from '@/theme/tokens';
 
 SplashScreen.preventAutoHideAsync();
@@ -42,7 +43,9 @@ export default function RootLayout() {
       <ThemeProvider
         value={{ ...base, colors: { ...base.colors, background: colors.background, card: colors.surface, text: colors.text, border: colors.line, primary: colors.accent } }}>
         <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
-        <AppTabs />
+        <DataProvider>
+          <AppTabs />
+        </DataProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );
