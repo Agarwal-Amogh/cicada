@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "Cicada",
+    "slug": "cicada",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "cicada",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "com.cicada.journal"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#131215",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.cicada.journal"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F6F6F8",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 76,
+          "dark": {
+            "backgroundColor": "#131215",
+            "image": "./assets/images/splash-icon.png"
+          }
+        }
+      ],
+      "./plugins/with-no-bold-text"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
