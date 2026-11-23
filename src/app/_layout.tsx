@@ -46,6 +46,7 @@ export default function RootLayout() {
           <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="write" options={{ animation: 'slide_from_bottom' }} />
+            <Stack.Screen name="report" />
           </Stack>
         </DataProvider>
       </ThemeProvider>

@@ -3,7 +3,7 @@ import { type LayoutChangeEvent, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Line, Path, Text as SvgText } from 'react-native-svg';
 
 import { formatDay, shortDate } from '@/domain/dates';
-import type { ChartPoint, ChartSpec } from '@/insights/chartData';
+import { type ChartPoint, type ChartSpec, formatSignal } from '@/insights/chartData';
 import { fonts, space, type, useColors } from '@/theme/tokens';
 
 const HEIGHT = 120;
@@ -21,12 +21,7 @@ function barPath(x: number, y: number, w: number, h: number) {
 
 function describe(spec: ChartSpec, p: ChartPoint) {
   if (p.value === null) return 'no data';
-  const v =
-    spec.barLabel === 'hours slept'
-      ? `${Math.floor(p.value)} h ${String(Math.round((p.value % 1) * 60)).padStart(2, '0')} m slept`
-      : spec.barLabel === 'steps'
-        ? `${Math.round(p.value).toLocaleString('en-IN')} steps`
-        : `${Math.round(p.value)} min on phone after midnight`;
+  const v = formatSignal(spec, p.value);
   return p.marker ? `${v} · ${spec.markerLabel}` : v;
 }
 

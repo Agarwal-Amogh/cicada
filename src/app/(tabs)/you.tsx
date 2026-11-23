@@ -1,16 +1,19 @@
+import { router } from 'expo-router';
 import { useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { TAB_BAR_HEIGHT, tabBarBottom } from '@/components/AppTabs';
+import { PressableScale } from '@/components/PressableScale';
 import { MoodGrid } from '@/components/you/MoodGrid';
 import { PatternCard } from '@/components/you/PatternCard';
 import { useDays, useEntries } from '@/data/DataProvider';
-import { addDays, dayKey } from '@/domain/dates';
+import { addDays, dayKey, shortDate } from '@/domain/dates';
 import { chartSpec } from '@/insights/chartData';
 import { dailyRows } from '@/insights/dailyRows';
 import { findPatterns } from '@/insights/patterns';
 import { PATTERN_WINDOW_DAYS } from '@/insights/weekNote';
+import { lastFullWeek, weeklyLetter } from '@/insights/weeklyLetter';
 import { radius, space, type, useColors } from '@/theme/tokens';
 
 /** Days of writing before Cicada expects to have seen enough (the learning period). */
@@ -31,6 +34,11 @@ export default function YouScreen() {
     if (!entries || !days) return { patterns: [], rows: [] };
     return { patterns: findPatterns(entries, days, from, today), rows: dailyRows(entries, days) };
   }, [entries, days, from, today]);
+  const letter = useMemo(
+    () => (entries && days ? weeklyLetter(entries, days, today) : null),
+    [entries, days, today],
+  );
+  const week = lastFullWeek(today);
   const daysWritten = useMemo(
     () => new Set((entries ?? []).filter((e) => e.day >= from).map((e) => e.day)).size,
     [entries, from],
@@ -67,6 +75,22 @@ export default function YouScreen() {
               {Math.min(daysWritten, LEARNING_DAYS)} of {LEARNING_DAYS} days written
             </Text>
           </View>
+        )}
+
+        {letter && letter.paragraphs.length > 0 && (
+          <PressableScale
+            onPress={() => router.push('/report')}
+            accessibilityRole="button"
+            accessibilityHint="Opens this week's letter"
+            style={[styles.note, { backgroundColor: colors.accentTint }]}>
+            <Text style={[type.label, { color: colors.accent }]}>
+              YOUR WEEK · {shortDate(week.from).toUpperCase()} – {shortDate(week.to).toUpperCase()}
+            </Text>
+            <Text style={[type.entry, { color: colors.text }]} numberOfLines={3}>
+              {letter.paragraphs[0]}
+            </Text>
+            <Text style={[type.callout, { color: colors.accent }]}>Read the letter ›</Text>
+          </PressableScale>
         )}
 
         {entries && <MoodGrid entries={entries} today={today} />}

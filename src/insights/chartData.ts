@@ -91,3 +91,13 @@ export function chartSpec(pattern: Pattern, rows: DayRow[], from: DayKey, to: Da
     max: Math.max(spec.threshold * 1.25, ...values),
   };
 }
+
+/** A day's signal in words: "4 h 50 m slept", "11,240 steps", "95 min on phone after midnight". */
+export function formatSignal(spec: Pick<ChartSpec, 'barLabel'>, value: number): string {
+  if (spec.barLabel === 'hours slept') {
+    const m = Math.round(value * 60);
+    return `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')} m slept`;
+  }
+  if (spec.barLabel === 'steps') return `${Math.round(value).toLocaleString('en-IN')} steps`;
+  return `${Math.round(value)} min on phone after midnight`;
+}
