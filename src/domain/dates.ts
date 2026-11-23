@@ -59,3 +59,15 @@ export function weekdayLetter(day: DayKey): string {
 export function dayOfMonth(day: DayKey): number {
   return startOfDay(day).getDate();
 }
+
+/** "Sat 22 Nov" */
+export function formatDay(day: DayKey): string {
+  const d = startOfDay(day);
+  return `${WEEKDAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]}`;
+}
+
+/** "22 Nov" */
+export function shortDate(day: DayKey): string {
+  const d = startOfDay(day);
+  return `${d.getDate()} ${MONTHS[d.getMonth()]}`;
+}
