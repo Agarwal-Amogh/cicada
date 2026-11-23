@@ -11,7 +11,7 @@ import { WriteButton } from '@/components/journal/WriteButton';
 import { useData, useDays, useEntries } from '@/data/DataProvider';
 import { addDays, dayKey } from '@/domain/dates';
 import { journalSections, weekStrip } from '@/domain/journalSections';
-import { weekNote } from '@/insights/weekNote';
+import { PATTERN_WINDOW_DAYS, weekNote } from '@/insights/weekNote';
 import { space, type, useColors } from '@/theme/tokens';
 
 // The Journal screen (Decision 0009): the title, this week's strip, one
@@ -23,7 +23,7 @@ export default function JournalScreen() {
   const entries = useEntries();
   // Today is read once per mount; good enough for a journal opened daily.
   const today = useMemo(() => dayKey(new Date()), []);
-  const days = useDays(addDays(today, -6), today);
+  const days = useDays(addDays(today, -(PATTERN_WINDOW_DAYS - 1)), today);
 
   const sections = useMemo(() => (entries ? journalSections(entries, today) : []), [entries, today]);
   const strip = useMemo(() => weekStrip(entries ?? [], today), [entries, today]);
