@@ -6,14 +6,13 @@ import {
 } from '@expo-google-fonts/inter';
 import { Newsreader_400Regular, Newsreader_500Medium } from '@expo-google-fonts/newsreader';
 import { useFonts } from 'expo-font';
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { AppTabs } from '@/components/AppTabs';
 import { DataProvider } from '@/data/DataProvider';
 import { palettes } from '@/theme/tokens';
 
@@ -44,7 +43,10 @@ export default function RootLayout() {
         value={{ ...base, colors: { ...base.colors, background: colors.background, card: colors.surface, text: colors.text, border: colors.line, primary: colors.accent } }}>
         <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
         <DataProvider>
-          <AppTabs />
+          <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="write" options={{ animation: 'slide_from_bottom' }} />
+          </Stack>
         </DataProvider>
       </ThemeProvider>
     </GestureHandlerRootView>

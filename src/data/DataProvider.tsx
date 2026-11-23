@@ -1,7 +1,7 @@
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 
 import { dayKey } from '@/domain/dates';
-import type { EntryWithTags } from '@/domain/types';
+import type { DayKey, DaySignals, EntryWithTags } from '@/domain/types';
 
 import { seedIfEmpty } from './seed/seedStore';
 import { openSqliteStore } from './sqliteStore';
@@ -60,4 +60,19 @@ export function useEntries(): EntryWithTags[] | null {
     };
   }, [store, version]);
   return entries;
+}
+
+/** Body and phone data for a range of days, oldest first. Null until loaded. */
+export function useDays(from: DayKey, to: DayKey): DaySignals[] | null {
+  const { store, version } = useData();
+  const [days, setDays] = useState<DaySignals[] | null>(null);
+  useEffect(() => {
+    if (!store) return;
+    let live = true;
+    store.listDays(from, to).then((d) => live && setDays(d));
+    return () => {
+      live = false;
+    };
+  }, [store, version, from, to]);
+  return days;
 }

@@ -54,6 +54,7 @@ export const type = {
   headline: { fontFamily: fonts.semibold, fontSize: 17, lineHeight: 22 },
   body: { fontFamily: fonts.regular, fontSize: 17, lineHeight: 24 },
   entry: { fontFamily: fonts.read, fontSize: 18, lineHeight: 27 },
+  entrySmall: { fontFamily: fonts.read, fontSize: 16, lineHeight: 23 },
   callout: { fontFamily: fonts.medium, fontSize: 15, lineHeight: 20 },
   caption: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18 },
   label: { fontFamily: fonts.semibold, fontSize: 12, lineHeight: 16, letterSpacing: 0.6 },
